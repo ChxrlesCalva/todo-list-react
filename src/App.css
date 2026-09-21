@@ -1,8 +1,15 @@
+/* ============ Layout ============ */
+
 .app {
   width: 400px;
+  max-width: calc(100% - 32px);
   margin: 50px auto;
   text-align: center;
-  font-family: Arial;
+  font-family: var(--sans);
+}
+
+.main {
+  width: 560px;
 }
 
 .input-area {
@@ -10,29 +17,501 @@
   gap: 10px;
 }
 
+/* ============ Form controls ============ */
+
 input {
   flex: 1;
-  padding: 10px;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--text);
+  font: inherit;
+  font-size: 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-button {
-  padding: 10px;
-  cursor: pointer;
+input::placeholder {
+  color: var(--muted);
+  opacity: 0.8;
 }
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--accent);
+}
+
+/* Priority dropdown: styled like the text inputs, with a purple arrow */
+select {
+  padding: 12px 40px 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background: var(--card)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%236D5DFB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat right 14px center;
+  color: var(--text);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  appearance: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+select:hover {
+  border-color: var(--border-strong);
+}
+
+select:focus:hover {
+  border-color: var(--primary);
+}
+
+/* Default buttons are primary (filled deep purple) */
+button {
+  padding: 11px 18px;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(109, 93, 251, 0.25);
+  transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(109, 93, 251, 0.32);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button:focus-visible {
+  outline: 3px solid var(--primary-light);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+button:disabled:hover {
+  background: var(--primary);
+  transform: none;
+  box-shadow: 0 4px 12px rgba(109, 93, 251, 0.25);
+}
+
+/* Secondary buttons: Back, Cancel, Delete (light purple) */
+li button,
+.subject-form button[type="button"],
+.subject-view .section-head button {
+  background: var(--accent);
+  color: var(--primary);
+  box-shadow: none;
+}
+
+li button:hover,
+.subject-form button[type="button"]:hover,
+.subject-view .section-head button:hover {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(109, 93, 251, 0.25);
+}
+
+/* ============ Welcome screen ============ */
+
+.welcome {
+  margin-top: clamp(48px, 15vh, 120px);
+  padding: 40px 32px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.welcome h1 {
+  font-size: 32px;
+  letter-spacing: -0.5px;
+}
+
+.welcome p {
+  margin: 8px 0 24px;
+  color: var(--muted);
+}
+
+/* ============ Header ============ */
+
+.header {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 32px;
+  padding: 34px 24px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  box-shadow: 0 12px 32px rgba(109, 93, 251, 0.28);
+}
+
+/* soft decorative circles */
+.header::before,
+.header::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  z-index: 0;
+}
+
+.header::before {
+  width: 160px;
+  height: 160px;
+  top: -70px;
+  right: -40px;
+}
+
+.header::after {
+  width: 110px;
+  height: 110px;
+  bottom: -55px;
+  left: -30px;
+}
+
+.header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  margin: 0 0 8px;
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.greeting {
+  margin: 0;
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* ============ Sections ============ */
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.subject-form {
+  margin-bottom: 16px;
+}
+
+.empty-note {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1.5px dashed var(--border-strong);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.55);
+  font-size: 15px;
+  color: var(--muted);
+}
+
+/* ============ Subject cards ============ */
+
+.subject-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
+}
+
+.subject-card {
+  padding: 22px 14px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card);
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  box-shadow: var(--shadow);
+}
+
+/* small purple sparkle above each subject name */
+.subject-card::before {
+  content: "✦";
+  display: block;
+  margin-bottom: 8px;
+  font-size: 18px;
+  color: var(--primary);
+}
+
+.subject-card:hover {
+  background: var(--card);
+  border-color: var(--primary);
+  color: var(--text);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* ============ Subject page ============ */
+
+.subject-view .section-head {
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.subject-title {
+  margin: 0 0 18px;
+  font-size: 30px;
+  letter-spacing: -0.3px;
+  text-align: left;
+  color: var(--primary);
+}
+
+.subject-view ul {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---- Add-task form: task text, then priority + button ---- */
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-form input {
+  flex: none;
+  width: 100%;
+}
+
+.task-form-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.task-form-row button {
+  flex: none;
+  white-space: nowrap;
+}
+
+.priority-field {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 10px;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.priority-field select {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ============ Task cards ============ */
 
 li {
   display: flex;
   justify-content: space-between;
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid #ddd;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+  text-align: left;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+}
+
+li:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
 }
 
 li span {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  color: var(--text);
   cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+/* round "checkbox" before each task */
+li span::before {
+  content: "";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-right: 12px;
+  border: 2px solid var(--border-strong);
+  border-radius: 50%;
+  vertical-align: middle;
+  font-size: 13px;
+  line-height: 1;
+  color: #fff;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+li span:hover::before {
+  border-color: var(--primary);
+}
+
+/* completed tasks: soft green */
+li.done {
+  background: var(--success-bg);
+  border-color: rgba(114, 198, 163, 0.55);
+}
+
+li.done:hover {
+  border-color: var(--success);
 }
 
 .done span {
+  color: var(--muted);
   text-decoration: line-through;
-  color: gray;
+}
+
+.done span::before {
+  content: "✓";
+  background: var(--success);
+  border-color: var(--success);
+}
+
+/* ============ Priority badges ============ */
+
+.priority-badge {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  gap: 6px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+
+.priority-high {
+  background: rgba(229, 72, 77, 0.12);
+  color: #c93b40;
+}
+
+.priority-medium {
+  background: rgba(245, 166, 35, 0.18);
+  color: #a8660a;
+}
+
+.priority-low {
+  background: rgba(114, 198, 163, 0.22);
+  color: #2c8a66;
+}
+
+/* completed tasks keep their priority visible, just softer */
+.done .priority-badge {
+  opacity: 0.6;
+}
+
+/* ============ Small screens ============ */
+
+@media (max-width: 520px) {
+  .app {
+    margin: 24px auto;
+  }
+
+  .welcome {
+    padding: 32px 20px;
+  }
+
+  .welcome .input-area {
+    flex-direction: column;
+  }
+
+  .header {
+    margin-bottom: 24px;
+    padding: 26px 18px;
+  }
+
+  .title {
+    font-size: 30px;
+    letter-spacing: 1px;
+  }
+
+  .greeting {
+    font-size: 16px;
+  }
+
+  .subject-grid {
+    gap: 10px;
+  }
+
+  .subject-card {
+    padding: 18px 10px;
+  }
+
+  .subject-title {
+    font-size: 26px;
+  }
+
+  /* add-subject form: input on its own row, buttons share the next row */
+  .subject-form {
+    flex-wrap: wrap;
+  }
+
+  .subject-form input {
+    flex: 1 1 100%;
+  }
+
+  .subject-form button {
+    flex: 1;
+  }
+
+  li {
+    flex-wrap: wrap;
+    padding: 12px 14px;
+  }
+
+  /* task text on its own row; priority badge + Delete share the next row */
+  li span {
+    flex: 1 1 100%;
+  }
+
+  li button {
+    padding: 9px 12px;
+  }
+
+  /* priority selector and Add Task each get a full-width row */
+  .task-form-row {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .priority-field,
+  .task-form-row button {
+    flex: 1 1 100%;
+  }
 }
